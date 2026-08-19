@@ -1,3 +1,4 @@
+-- fft.adb
 with Ada.Numerics; use Ada.Numerics;
 with Ada.Numerics.Elementary_Functions; use Ada.Numerics.Elementary_Functions;
 
@@ -7,8 +8,17 @@ package body FFT is
    -- Helper Functions
    -------------------------------------------------
    function Is_Power_Of_2 (N : Natural) return Boolean is
+      Temp : Natural := N;
    begin
-      return N > 0 and then (N and (N - 1)) = 0;
+      if Temp = 0 then 
+         return False; 
+      end if;
+      
+      while Temp mod 2 = 0 loop
+         Temp := Temp / 2;
+      end loop;
+      
+      return Temp = 1;
    end Is_Power_Of_2;
 
    function Next_Power_Of_2 (N : Natural) return Natural is
