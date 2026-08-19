@@ -1,3 +1,4 @@
+-- tests.adb
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Numerics.Complex_Types; use Ada.Numerics.Complex_Types;
 with FFT; use FFT;
@@ -32,13 +33,13 @@ procedure Tests is
    -- Shared test data
    Zero_C : constant Complex := (0.0, 0.0);
    Empty_Arr   : Complex_Array (1 .. 0);
-   Single_Arr  : Complex_Array (0 .. 0) := (0 => (5.0, 0.0));
-   Invalid_Arr : Complex_Array (0 .. 2) := (others => Zero_C);
+   Single_Arr  : constant Complex_Array (0 .. 0) := (0 => (5.0, 0.0));
+   Invalid_Arr : constant Complex_Array (0 .. 2) := (others => Zero_C);
    
-   Impulse : Complex_Array (0 .. 3) := ((1.0, 0.0), Zero_C, Zero_C, Zero_C);
-   DC      : Complex_Array (0 .. 3) := ((1.0, 0.0), (1.0, 0.0), (1.0, 0.0), (1.0, 0.0));
-   Nyquist : Complex_Array (0 .. 3) := ((1.0, 0.0), (-1.0, 0.0), (1.0, 0.0), (-1.0, 0.0));
-   Sine    : Complex_Array (0 .. 3) := (Zero_C, (1.0, 0.0), Zero_C, (-1.0, 0.0));
+   Impulse : constant Complex_Array (0 .. 3) := ((1.0, 0.0), Zero_C, Zero_C, Zero_C);
+   DC      : constant Complex_Array (0 .. 3) := ((1.0, 0.0), (1.0, 0.0), (1.0, 0.0), (1.0, 0.0));
+   Nyquist : constant Complex_Array (0 .. 3) := ((1.0, 0.0), (-1.0, 0.0), (1.0, 0.0), (-1.0, 0.0));
+   Sine    : constant Complex_Array (0 .. 3) := (Zero_C, (1.0, 0.0), Zero_C, (-1.0, 0.0));
    
    Output : Complex_Array (0 .. 3);
    N_256  : Complex_Array (0 .. 255);
@@ -55,6 +56,7 @@ begin
    begin
       declare
          Res : Complex_Array := FFT_Recursive_DIT (Invalid_Arr);
+         pragma Unreferenced (Res);
       begin
          Assert (False, "Should have raised FFT_Error");
       end;
