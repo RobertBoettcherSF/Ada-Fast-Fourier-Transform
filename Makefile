@@ -1,17 +1,17 @@
-.PHONY: all test clean
+# Makefile
+.PHONY: all test clean build
 
-GNAT = gnatmake
-OBJ_DIR = obj
-BIN_DIR = bin
+all: test
 
-all: $(BIN_DIR)/tests
+build:
+	mkdir -p obj
+	mkdir -p bin
+	gnatmake -P fft_project.gpr
 
-$(BIN_DIR)/tests: tests.adb fft.adb fft.ads
-	@mkdir -p $(OBJ_DIR) $(BIN_DIR)$(GNAT) -P fft_project.gpr
-
-test: $(BIN_DIR)/tests
+test: build
 	@echo "Running Verification & Validation tests..."
-	@$(BIN_DIR)/tests
+	./bin/tests
 
 clean:
-	rm -rf $(OBJ_DIR)/*$(BIN_DIR)/*
+	rm -rf obj
+	rm -rf bin
